@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=IM+Fell+English:ital@0;1&family=Pirata+One&display=swap');
+
+/* ── strip any body/html margin that could show white edges ── */
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #3b2f2f;
+}
+
+@keyframes pulseBackground {
+  0%   { background-color: #3b2f2f; }
+  50%  { background-color: #5a3e2b; }
+  100% { background-color: #3b2f2f; }
+}
+
+/* ── ROOT — full-width so the pulse fills the whole screen ── */
+.tm-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;                    /* full width — background covers everything */
+  padding: 1.75rem 1rem;
+  box-sizing: border-box;
+  gap: 14px;
+  overflow-y: auto;
+  animation: pulseBackground 6s ease-in-out infinite;
+  font-family: 'Cinzel Decorative', serif;
+}
+
+/* ── header ── */
+.tm-header {
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.tm-logo {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.45rem;
+  font-weight: 900;
+  letter-spacing: .18em;
+  color: #e8c547;
+  text-shadow: 0 0 30px rgba(232,197,71,.35), 0 2px 4px rgba(0,0,0,.8);
+  margin: 0;
+}
+
+.tm-sub {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: .7rem;
+  letter-spacing: .1em;
+  color: #c49a2a;
+  opacity: .8;
+  margin-top: 6px;
+}
+
+/* ── map canvas — max-width lives HERE, not on the root ── */
+.tm-canvas {
+  position: relative;
+  width: 100%;
+  max-width: 680px;               /* constrains the map, NOT the background */
+  aspect-ratio: 5 / 3;
+  background: #f2e4c4;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow:
+    0 0 0 3px #8b6530,
+    0 0 0 6px #4a2f0a,
+    0 0 0 9px #8b6530,
+    0 0 50px rgba(0,0,0,.75);
+  transition: box-shadow .5s;
+}
+
+.tm-canvas.state-ok {
+  box-shadow:
+    0 0 0 3px #c49a2a,
+    0 0 0 6px #4a2f0a,
+    0 0 0 9px #e8c547,
+    0 0 50px rgba(0,0,0,.75),
+    0 0 40px rgba(232,197,71,.2);
+}
+
+.tm-canvas.state-err {
+  box-shadow:
+    0 0 0 3px #8b2020,
+    0 0 0 6px #4a2f0a,
+    0 0 0 9px #c03030,
+    0 0 50px rgba(0,0,0,.75);
+}
+
+.tm-canvas.shake {
+  animation: tmShake .44s ease;
+}
+
+@keyframes tmShake {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-8px); }
+  40%      { transform: translateX(8px); }
+  60%      { transform: translateX(-4px); }
+  80%      { transform: translateX(4px); }
+}
+
+/* parchment worn edges */
+.tm-canvas::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 4px;
+  background:
+    radial-gradient(ellipse at 8% 12%,  rgba(42,26,6,.2)  0%, transparent 42%),
+    radial-gradient(ellipse at 92% 88%, rgba(42,26,6,.18) 0%, transparent 38%),
+    radial-gradient(ellipse at 78% 8%,  rgba(42,26,6,.12) 0%, transparent 28%),
+    radial-gradient(ellipse at 14% 92%, rgba(42,26,6,.14) 0%, transparent 32%),
+    linear-gradient(to right,  rgba(42,26,6,.22) 0%, transparent 7%,  transparent 93%, rgba(42,26,6,.22) 100%),
+    linear-gradient(to bottom, rgba(42,26,6,.18) 0%, transparent 6%,  transparent 94%, rgba(42,26,6,.18) 100%);
+}
+
+.tm-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.tm-svg.mode-active { cursor: crosshair; }
+.tm-svg.mode-watch  { cursor: default; }
+
+/* ── landmark node ── */
+.tm-landmark { cursor: pointer; }
+.tm-landmark .lm-xmark  { transition: opacity .2s; }
+.tm-landmark .lm-dot    { transition: all .18s; }
+.tm-landmark .lm-ring   { transition: all .2s; }
+
+.tm-landmark .lm-label {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 7.5px;
+  fill: rgba(42,26,6,.55);
+  letter-spacing: .04em;
+  pointer-events: none;
+}
+
+.tm-landmark .lm-seq {
+  font-family: 'Pirata One', serif;
+  font-size: 9px;
+  pointer-events: none;
+}
+
+/* ── route line dash animation ── */
+@keyframes tmDash { to { stroke-dashoffset: 0; } }
+
+.route-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── overlay ── */
+.tm-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(242,228,196,.94);
+  border-radius: 4px;
+  transition: opacity .3s;
+  backdrop-filter: blur(2px);
+}
+
+.tm-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tm-ov-icon   { font-size: 2.6rem; line-height: 1; }
+
+.tm-ov-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  color: #2a1a06;
+  text-align: center;
+  margin: 0;
+}
+
+.tm-ov-divider {
+  width: 110px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #8b6530, transparent);
+}
+
+.tm-ov-text {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: .7rem;
+  color: #4a2f0a;
+  text-align: center;
+  max-width: 330px;
+  line-height: 1.9;
+  opacity: .85;
+  margin: 0;
+}
+
+.tm-ov-btns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+/* ── status bar ── */
+.tm-status {
+  width: 100%;
+  max-width: 680px;               /* match canvas width so it aligns */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding-bottom: 0.5rem;
+}
+
+.tm-msg {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: .7rem;
+  letter-spacing: .06em;
+  color: #c49a2a;
+  min-height: 1em;
+  transition: color .3s;
+}
+
+.tm-msg.ok  { color: #e8c547; }
+.tm-msg.err { color: #e05050; }
+
+.tm-counter {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: .62rem;
+  color: #c49a2a;
+  opacity: .7;
+}
+
+.tm-actions { display: flex; gap: 8px; }
+
+/* ── buttons ── */
+.tm-btn {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: .48rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: 2px;
+  border: 1px solid rgba(139,101,48,.4);
+  background: rgba(242,228,196,.05);
+  color: #e8c547;
+  cursor: pointer;
+  transition: all .22s;
+  text-shadow: 0 1px 2px rgba(0,0,0,.5);
+}
+
+.tm-btn:hover {
+  background: rgba(196,154,42,.14);
+  border-color: #c49a2a;
+  box-shadow: 0 0 10px rgba(196,154,42,.18);
+}
+
+.tm-btn:active { transform: scale(.97); }
+
+.tm-btn.danger {
+  border-color: rgba(139,48,48,.4);
+  color: #e87878;
+}
+
+.tm-btn.danger:hover {
+  background: rgba(139,48,48,.12);
+  border-color: #c05050;
+}
+
+.tm-btn.success {
+  border-color: rgba(42,26,6,.3);
+  color: #4a2f0a;
+  background: rgba(242,228,196,.8);
+}
+
+.tm-btn.success:hover { background: rgba(242,228,196,.95); }
+
+/* ── overlay buttons (on parchment bg) ── */
+.tm-ov-btn {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: .46rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 2px;
+  border: 1px solid rgba(139,101,48,.4);
+  background: rgba(42,26,6,.06);
+  color: #4a2f0a;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.tm-ov-btn:hover {
+  background: rgba(42,26,6,.12);
+  border-color: rgba(139,101,48,.7);
+}
+
+.tm-ov-btn:active { transform: scale(.97); }
+
+.tm-ov-btn.gold {
+  border-color: rgba(196,154,42,.55);
+  color: #7a4f00;
+  background: rgba(196,154,42,.08);
+}
+
+.tm-ov-btn.gold:hover {
+  background: rgba(196,154,42,.18);
+  border-color: #c49a2a;
+}

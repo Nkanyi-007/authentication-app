@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=IM+Fell+English:ital@0;1&family=Pirata+One&display=swap');
+
+/* ── root ── */
+.dash-root {
+  min-height: 100vh;
+  background: #1a0f04;
+  display: flex;
+  flex-direction: column;
+  font-family: 'IM Fell English', serif;
+}
+
+/* ── nav ── */
+.dash-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 2rem;
+  background: rgba(42, 26, 6, 0.6);
+  border-bottom: 1px solid rgba(139, 101, 48, 0.35);
+  backdrop-filter: blur(6px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.dash-nav-brand {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: #e8c547;
+  text-shadow: 0 0 20px rgba(232, 197, 71, .3);
+}
+
+.dash-nav-logout {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: .44rem;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  padding: 7px 16px;
+  border-radius: 2px;
+  border: 1px solid rgba(139, 48, 48, .45);
+  background: transparent;
+  color: #e87878;
+  cursor: pointer;
+  transition: all .22s;
+}
+
+.dash-nav-logout:hover {
+  background: rgba(139, 48, 48, .14);
+  border-color: #c05050;
+  box-shadow: 0 0 10px rgba(192, 80, 80, .18);
+}
+
+.dash-nav-logout:active {
+  transform: scale(.97);
+}
+
+/* ── main ── */
+.dash-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+}
+
+/* ── card ── */
+.dash-card {
+  width: 100%;
+  max-width: 620px;
+  background: #f2e4c4;
+  border-radius: 4px;
+  padding: 2.8rem 2.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  position: relative;
+  box-shadow:
+    0 0 0 3px #8b6530,
+    0 0 0 6px #4a2f0a,
+    0 0 0 9px #8b6530,
+    0 0 60px rgba(0, 0, 0, .75);
+}
+
+/* parchment worn edges */
+.dash-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 6% 10%,  rgba(42,26,6,.18) 0%, transparent 40%),
+    radial-gradient(ellipse at 94% 90%, rgba(42,26,6,.16) 0%, transparent 38%),
+    linear-gradient(to right,  rgba(42,26,6,.18) 0%, transparent 7%,  transparent 93%, rgba(42,26,6,.18) 100%),
+    linear-gradient(to bottom, rgba(42,26,6,.15) 0%, transparent 6%,  transparent 94%, rgba(42,26,6,.15) 100%);
+}
+
+.dash-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── compass icon ── */
+.dash-compass {
+  font-size: 3rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 6px rgba(42,26,6,.25));
+}
+
+/* ── greeting ── */
+.dash-greeting {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: #2a1a06;
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.dash-name {
+  color: #8b2020;
+  text-shadow: 0 1px 3px rgba(139,32,32,.2);
+}
+
+/* ── divider ── */
+.dash-divider {
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #8b6530, transparent);
+}
+
+/* ── subtitle ── */
+.dash-sub {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: .85rem;
+  color: #4a2f0a;
+  text-align: center;
+  opacity: .8;
+  margin: 0;
+  line-height: 1.8;
+}
+
+/* ── stats row ── */
+.dash-stats {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: .4rem;
+}
+
+.dash-stat {
+  flex: 1;
+  min-width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  background: rgba(42, 26, 6, .06);
+  border: 1px solid rgba(139, 101, 48, .3);
+  border-radius: 3px;
+  padding: 1rem .8rem;
+}
+
+.dash-stat-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.dash-stat-label {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: .38rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #8b6530;
+}
+
+.dash-stat-value {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: .8rem;
+  color: #2a1a06;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ── scroll / quote ── */
+.dash-scroll {
+  width: 100%;
+  border: 1px solid rgba(139, 101, 48, .28);
+  border-radius: 3px;
+  background: rgba(42, 26, 6, .04);
+  padding: 1.1rem 1.4rem;
+  margin-top: .3rem;
+  position: relative;
+}
+
+.dash-scroll::before,
+.dash-scroll::after {
+  content: '✦';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(139, 101, 48, .35);
+  font-size: .7rem;
+}
+
+.dash-scroll::before { left: .6rem; }
+.dash-scroll::after  { right: .6rem; }
+
+.dash-scroll-text {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: .78rem;
+  color: #4a2f0a;
+  text-align: center;
+  line-height: 2;
+  margin: 0;
+  opacity: .75;
+  padding: 0 1rem;
+}
+
+/* ── responsive ── */
+@media (max-width: 500px) {
+  .dash-card {
+    padding: 2rem 1.2rem;
+  }
+
+  .dash-greeting {
+    font-size: 1rem;
+  }
+
+  .dash-stats {
+    flex-direction: column;
+  }
+
+  .dash-stat {
+    min-width: unset;
+  }
+}
